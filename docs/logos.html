@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Nebula 로고 시안</title>
+<style>
+  body { margin: 0; font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #0f0d16; color: #f1eef8; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .cell { padding: 28px 24px 20px; display: flex; flex-direction: column; align-items: center; gap: 18px; border: 1px solid #221e30; }
+  .cell.light { background: #f6f3fb; color: #1d1929; border-color: #e3dff0; }
+  .mark { display: flex; align-items: center; gap: 12px; font-size: 34px; font-weight: 800; letter-spacing: -.01em; }
+  .tag { font-size: 13px; color: #9a93b0; }
+  .light .tag { color: #675f7f; }
+  .row { display: flex; gap: 18px; align-items: center; }
+  .grad { background: linear-gradient(90deg, #9680f2, #e8678a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .bar { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 800; padding: 8px 12px; border-radius: 8px; background: #15121f; }
+  .light .bar { background: #fff; box-shadow: 0 0 0 1px #e3dff0; }
+  h2 { margin: 0; font-size: 15px; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b09dfc"/><stop offset="1" stop-color="#e8678a"/></linearGradient>
+    <linearGradient id="g2" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6f5ae0"/><stop offset=".55" stop-color="#9680f2"/><stop offset="1" stop-color="#ff8fb1"/></linearGradient>
+    <radialGradient id="cloud" cx=".45" cy=".45" r=".6"><stop offset="0" stop-color="#ffd1e3"/><stop offset=".35" stop-color="#e8678a"/><stop offset=".7" stop-color="#7f65e3"/><stop offset="1" stop-color="#3d2e74"/></radialGradient>
+    <!-- A. 궤도 별 -->
+    <symbol id="A" viewBox="0 0 32 32">
+      <ellipse cx="16" cy="16" rx="14" ry="6" transform="rotate(-24 16 16)" fill="none" stroke="#7f65e3" stroke-width="1.6"/>
+      <path d="M16 3C17.2 11 21 14.8 29 16 21 17.2 17.2 21 16 29 14.8 21 11 17.2 3 16 11 14.8 14.8 11 16 3Z" fill="url(#g)"/>
+      <circle cx="26" cy="7" r="1.6" fill="#ff8fb1"/>
+    </symbol>
+    <!-- B. 은하 소용돌이 -->
+    <symbol id="B" viewBox="0 0 32 32">
+      <path d="M16 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0" fill="#fff"/>
+      <path d="M16 14c6-6 14-1 12 6" fill="none" stroke="url(#g)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M16 18c-6 6-14 1-12-6" fill="none" stroke="url(#g)" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M18 16c3-1 5 1 5 3" fill="none" stroke="#b09dfc" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M14 16c-3 1-5-1-5-3" fill="none" stroke="#e8678a" stroke-width="1.6" stroke-linecap="round"/>
+    </symbol>
+    <!-- C. 별자리 N -->
+    <symbol id="C" viewBox="0 0 32 32">
+      <path d="M7 26V6l18 20V6" fill="none" stroke="url(#g)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="7" cy="26" r="2.6" fill="#9680f2"/><circle cx="7" cy="6" r="2.2" fill="#b09dfc"/>
+      <circle cx="25" cy="26" r="2.2" fill="#e8678a"/><circle cx="25" cy="6" r="3" fill="#ff8fb1"/>
+      <path d="M25 1.5v9M20.5 6h9" stroke="#ffd1e3" stroke-width="1" stroke-linecap="round"/>
+    </symbol>
+    <!-- D. 성운 구름 -->
+    <symbol id="D" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="14" fill="url(#cloud)"/>
+      <path d="M5 19c5-4 10 3 22-3" fill="none" stroke="#ffd1e3" stroke-opacity=".55" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M21 8.5c.4 2 1.1 2.7 3 3-1.9.4-2.6 1.1-3 3-.4-1.9-1.1-2.6-3-3 1.9-.3 2.6-1 3-3Z" fill="#fff"/>
+      <circle cx="10" cy="11" r="1" fill="#fff" opacity=".9"/><circle cx="12" cy="23" r=".8" fill="#fff" opacity=".8"/>
+    </symbol>
+    <!-- E. 육각 배지 -->
+    <symbol id="E" viewBox="0 0 32 32">
+      <path d="M16 1.5 28.6 8.8v14.4L16 30.5 3.4 23.2V8.8Z" fill="url(#g2)"/>
+      <path d="M16 7c.9 6 3 8.1 9 9-6 .9-8.1 3-9 9-.9-6-3-8.1-9-9 6-.9 8.1-3 9-9Z" fill="#fff"/>
+    </symbol>
+    <!-- F. 초승달 + 별 -->
+    <symbol id="F" viewBox="0 0 32 32">
+      <path d="M20 3.5A13 13 0 1 0 28.5 22 10.5 10.5 0 0 1 20 3.5Z" fill="url(#g)"/>
+      <path d="M23 7c.5 3 1.5 4 4.5 4.5-3 .5-4 1.5-4.5 4.5-.5-3-1.5-4-4.5-4.5 3-.5 4-1.5 4.5-4.5Z" fill="#ffd1e3"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="grid" id="grid"></div>
+<script>
+  const items = [
+    ['A', '궤도 별', '지금 로아 사이트 로고 계열. 네 갈래 별 + 기울어진 궤도'],
+    ['B', '은하 소용돌이', '나선 은하 두 팔. 움직임·회전 느낌'],
+    ['C', '별자리 N', '별 네 개를 이은 N. 이니셜이 바로 읽힘'],
+    ['D', '성운 구름', 'nebula(성운) 그대로. 보라→분홍 구름 + 반짝임'],
+    ['E', '육각 배지', '게임 엠블럼 느낌. 작게 써도 또렷함'],
+    ['F', '초승달 별', '밤하늘 무드. 부드럽고 단순함'],
+  ]
+  const icon = (id, s) => `<svg width="${s}" height="${s}"><use href="#${id}"/></svg>`
+  document.getElementById('grid').innerHTML = items.map(([id, name, desc]) => ['', 'light'].map(theme => `
+    <div class="cell ${theme}">
+      <h2>${id}. ${name}</h2>
+      <div class="mark">${icon(id, 48)}<span class="grad">Nebula</span></div>
+      <div class="row">${icon(id, 64)}${icon(id, 32)}${icon(id, 16)}<div class="bar">${icon(id, 18)}<span class="grad">Nebula</span></div></div>
+      <div class="tag">${desc}</div>
+    </div>`).join('')).join('')
+</script>
+</body></html>
