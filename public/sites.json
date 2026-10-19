@@ -14,5 +14,13 @@
     "url": "https://nikke.nebula.kim",
     "color": "#e8678a",
     "description": "캐릭터별 스킬·오버로드·큐브·소장품 육성 가이드"
+  },
+  {
+    "id": "wuwa",
+    "name": "명조",
+    "game": "명조",
+    "url": "https://wuwa.nebula.kim",
+    "color": "#5ED9B2",
+    "description": "캐릭터별 육성 목표 · 에코 · 무기 추천"
   }
 ]

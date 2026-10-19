@@ -5,6 +5,7 @@ const targets = [
   ['/home/user/nebula-hub/public', '게임 도우미 사이트 모음'],
   ['/home/user/loa-raid/public', '원정대 등록하면 레이드 공대를 자동으로 짜줘요'],
   ['/home/user/nikke/public', '캐릭터별 스킬·오버로드·큐브·소장품 육성 가이드'],
+  ['/home/user/wuwa/public', '캐릭터별 육성 목표 · 에코 · 무기 추천'],
 ]
 const b = await chromium.launch()
 const og = await b.newPage({ viewport: { width: 1200, height: 630 } })
