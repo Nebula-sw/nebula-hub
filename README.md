@@ -1,4 +1,4 @@
-# nebula hub (nebula.kim)
+# Nebula hub (nebula.kim)
 
 `*.nebula.kim` 게임 도우미 사이트들을 묶는 허브입니다. 서버 코드 없는 정적 사이트(Cloudflare Workers Static Assets)입니다.
 
@@ -19,6 +19,7 @@
    ```json
    { "id": "wuwa", "name": "명조 ○○", "game": "명조", "url": "https://wuwa.nebula.kim", "color": "#5cc98a", "description": "설명" }
    ```
+   (맨 위 바에는 `game`(게임 이름)만 표시되고, `name`·`description`은 마우스를 올렸을 때 나옵니다.)
 3. 끝. 기존 사이트들은 고칠 필요 없음 (캐시 때문에 최대 5분 뒤 반영)
 
 ## 전환 바 색 맞추기 (선택)

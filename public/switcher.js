@@ -6,7 +6,7 @@
  *
  * 동작:
  *   1. 이 파일과 같은 곳의 sites.json(사이트 목록)을 불러옴
- *   2. 페이지 맨 위에 얇은 바를 끼워 넣고, 사이트들을 버튼으로 나열
+ *   2. 페이지 맨 위에 바를 끼워 넣고, 사이트들을 게임 이름 버튼으로 나열
  *   3. 지금 보고 있는 사이트는 강조 표시 (주소의 도메인으로 판별)
  * → 새 사이트를 추가할 때는 sites.json 에 한 줄만 추가하면 모든 사이트의 바에 자동으로 나타남
  *
@@ -54,40 +54,44 @@
           --border: var(--nebula-bar-border, var(--color-night-800, #2a2638));
           --active: var(--nebula-bar-active, var(--color-night-800, #2a2638));
           display: flex; align-items: center; gap: 4px;
-          height: 34px; padding: 0 12px; box-sizing: border-box;
+          height: 51px; padding: 0 16px; box-sizing: border-box;
           background: var(--bg); color: var(--fg);
           border-bottom: 1px solid var(--border);
-          font: 500 12px/1 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+          font: 500 14px/1 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
           overflow-x: auto; scrollbar-width: none;
         }
         nav::-webkit-scrollbar { display: none; }
         a { color: inherit; text-decoration: none; }
         .brand {
-          display: flex; align-items: center; gap: 5px; padding-right: 10px; margin-right: 4px;
-          border-right: 1px solid var(--border); color: var(--muted); font-weight: 700; letter-spacing: .02em;
+          display: flex; align-items: center; gap: 6px; padding-right: 14px; margin-right: 6px;
+          border-right: 1px solid var(--border); font-weight: 800; font-size: 15px; letter-spacing: .02em;
           white-space: nowrap;
         }
-        .brand:hover { color: var(--fg); }
+        /* 로고 색: 별은 보라, 글자는 보라→분홍 그라데이션 */
+        .brand .star { color: #9680f2; }
+        .brand .word {
+          background: linear-gradient(90deg, #9680f2, #e8678a); -webkit-background-clip: text; background-clip: text;
+          color: transparent;
+        }
+        .brand:hover { filter: brightness(1.15); }
         .site {
-          display: flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px;
-          border-radius: 6px; color: var(--muted); white-space: nowrap;
+          display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px;
+          border-radius: 8px; color: var(--muted); white-space: nowrap;
         }
         .site:hover { color: var(--fg); background: color-mix(in srgb, var(--active) 60%, transparent); }
         .site.current { color: var(--fg); background: var(--active); font-weight: 700; }
-        .dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
-        .game { color: var(--muted); font-weight: 400; }
-        @media (max-width: 480px) { .game { display: none; } }
+        .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
       </style>
       <nav aria-label="네뷸라 사이트">
-        <a class="brand" href="${hubUrl}" title="네뷸라 사이트 모음">✦ nebula</a>
+        <a class="brand" href="${hubUrl}" title="Nebula 사이트 모음"><span class="star">✦</span><span class="word">Nebula</span></a>
         ${sites
           .map((s) => {
             const current = s.id === currentId
             return `<a class="site${current ? ' current' : ''}" href="${current ? '#' : s.url}" ${
               current ? 'aria-current="page"' : ''
-            } title="${escapeHtml(s.description || s.name)}">
+            } title="${escapeHtml(s.name)} · ${escapeHtml(s.description || '')}">
               <span class="dot" style="background:${escapeHtml(s.color || '#888')}"></span>
-              ${escapeHtml(s.name)}${s.game ? ` <span class="game">${escapeHtml(s.game)}</span>` : ''}
+              ${escapeHtml(s.game || s.name)}
             </a>`
           })
           .join('')}
