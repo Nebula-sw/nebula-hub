@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Nebula 로고 시안 2</title>
+<style>
+  body { margin: 0; font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #0f0d16; color: #f1eef8; }
+  section { display: grid; grid-template-columns: 1fr 1fr; }
+  .cell { padding: 26px 24px 20px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .cell.light { background: #f6f3fb; color: #1d1929; }
+  .mark { display: flex; align-items: center; gap: 12px; font-size: 34px; font-weight: 800; letter-spacing: -.01em; }
+  .tag { font-size: 13px; color: #9a93b0; text-align: center; }
+  .light .tag { color: #675f7f; }
+  .row { display: flex; gap: 18px; align-items: center; }
+  .grad { background: linear-gradient(90deg, #9680f2, #e8678a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .bar { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 800; padding: 8px 12px; border-radius: 8px; background: #15121f; }
+  .light .bar { background: #fff; box-shadow: 0 0 0 1px #e3dff0; }
+  .app { width: 64px; height: 64px; border-radius: 15px; background: #15121f; display: grid; place-items: center; box-shadow: 0 0 0 1px #2a2638; }
+  .light .app { background: #1d1730; }
+  h2 { margin: 0; font-size: 15px; }
+  h1 { margin: 0; padding: 22px 24px 4px; font-size: 18px; background: #0f0d16; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- 공용 그라데이션 -->
+    <radialGradient id="cloud" cx=".42" cy=".4" r=".65"><stop offset="0" stop-color="#ffe0ec"/><stop offset=".3" stop-color="#f07aa0"/><stop offset=".62" stop-color="#8a6cf0"/><stop offset="1" stop-color="#2c2160"/></radialGradient>
+    <radialGradient id="glowP" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff9cc0" stop-opacity=".95"/><stop offset="1" stop-color="#ff9cc0" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowV" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#9d86ff" stop-opacity=".95"/><stop offset="1" stop-color="#9d86ff" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glowW" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <linearGradient id="deep" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a2a7a"/><stop offset="1" stop-color="#1a1238"/></linearGradient>
+    <linearGradient id="vp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a48cff"/><stop offset="1" stop-color="#f07aa0"/></linearGradient>
+    <clipPath id="orb"><circle cx="16" cy="16" r="14"/></clipPath>
+    <!-- 초승달 모양 (큰 원 - 오른쪽 위로 비킨 원) -->
+    <mask id="crescent"><rect width="32" height="32" fill="#fff"/><circle cx="22" cy="10" r="11" fill="#000"/></mask>
+    <mask id="crescent2"><rect width="32" height="32" fill="#fff"/><circle cx="21.5" cy="11" r="10.2" fill="#000"/></mask>
+    <filter id="soft"><feGaussianBlur stdDeviation=".9"/></filter>
+    <filter id="soft2"><feGaussianBlur stdDeviation="1.6"/></filter>
+
+    <!-- 반짝임(네 갈래 별) -->
+    <symbol id="spark" viewBox="-1 -1 2 2"><path d="M0-1C.12-.25.25-.12 1 0 .25.12.12.25 0 1-.12.25-.25.12-1 0-.25-.12-.12-.25 0-1Z" fill="#fff"/></symbol>
+
+    <!-- D1. 성운 구름 다듬기: 구름층 여러 겹 + 반짝임 -->
+    <symbol id="D1" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="14" fill="url(#deep)"/>
+      <g clip-path="url(#orb)" filter="url(#soft)">
+        <ellipse cx="11" cy="12" rx="10" ry="7" fill="url(#glowV)"/>
+        <ellipse cx="19" cy="19" rx="11" ry="6" fill="url(#glowP)" transform="rotate(-20 19 19)"/>
+        <ellipse cx="14" cy="15" rx="5" ry="3.4" fill="url(#glowW)" opacity=".8"/>
+      </g>
+      <g clip-path="url(#orb)"><path d="M2 21c6-5 12 2 28-4" fill="none" stroke="#ffd6e6" stroke-opacity=".55" stroke-width="1.1" stroke-linecap="round"/></g>
+      <use href="#spark" x="18.5" y="6.5" width="7" height="7"/>
+      <circle cx="9" cy="22" r=".7" fill="#fff" opacity=".85"/><circle cx="24" cy="21" r=".55" fill="#fff" opacity=".7"/>
+    </symbol>
+
+    <!-- D2. 소용돌이 성운: 구 안에 나선 가스 -->
+    <symbol id="D2" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="14" fill="url(#cloud)"/>
+      <g clip-path="url(#orb)" fill="none" stroke-linecap="round">
+        <path d="M16 16c4-3 9-1 9 4s-7 8-12 5-7-10-2-15 13-4 16 2" stroke="#fff" stroke-opacity=".5" stroke-width="1.3"/>
+        <path d="M16 16c-2 2-5 1-5-2" stroke="#ffe0ec" stroke-opacity=".7" stroke-width="1.1"/>
+      </g>
+      <circle cx="16" cy="16" r="1.8" fill="#fff"/>
+      <use href="#spark" x="22" y="5" width="5" height="5"/>
+    </symbol>
+
+    <!-- D3. 단순형: 작은 크기(16px)용 -->
+    <symbol id="D3" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="14" fill="url(#vp)"/>
+      <g clip-path="url(#orb)"><path d="M1 20c7-6 14 3 30-5v20H1Z" fill="#fff" opacity=".2"/></g>
+      <use href="#spark" x="16" y="6" width="10" height="10"/>
+    </symbol>
+
+    <!-- DF1. 성운 초승달: 초승달 안에 성운 구름 + 비어있는 쪽에 별 -->
+    <symbol id="DF1" viewBox="0 0 32 32">
+      <g mask="url(#crescent)">
+        <circle cx="15" cy="17" r="13.5" fill="url(#deep)"/>
+        <g filter="url(#soft)">
+          <ellipse cx="9" cy="20" rx="8" ry="8" fill="url(#glowV)"/>
+          <ellipse cx="14" cy="27" rx="9" ry="5" fill="url(#glowP)"/>
+          <ellipse cx="7" cy="16" rx="3.5" ry="5" fill="url(#glowW)" opacity=".7"/>
+        </g>
+      </g>
+      <use href="#spark" x="18" y="4" width="10" height="10"/>
+      <circle cx="27" cy="16" r=".8" fill="#ffd6e6"/><circle cx="23" cy="19.5" r=".55" fill="#fff" opacity=".8"/>
+    </symbol>
+
+    <!-- DF2. 위상(달의 모양): 성운 구슬에 그림자가 져서 초승달만 빛남 -->
+    <symbol id="DF2" viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="14" fill="url(#cloud)"/>
+      <circle cx="16" cy="16" r="14" fill="#171230" mask="url(#crescent2)" opacity="0" />
+      <g clip-path="url(#orb)"><circle cx="21.5" cy="11" r="10.2" fill="#150f2c" opacity=".88"/></g>
+      <circle cx="16" cy="16" r="13.6" fill="none" stroke="#b9a6ff" stroke-opacity=".35" stroke-width=".8"/>
+      <use href="#spark" x="18.5" y="7" width="7" height="7"/>
+      <circle cx="24.5" cy="15.5" r=".6" fill="#fff" opacity=".8"/>
+    </symbol>
+
+    <!-- DF3. 일식 고리: 어두운 원 뒤로 성운 빛이 초승달 모양으로 새어 나옴 -->
+    <symbol id="DF3" viewBox="0 0 32 32">
+      <g filter="url(#soft2)">
+        <circle cx="14.5" cy="17.5" r="13" fill="url(#glowP)"/>
+        <circle cx="12" cy="20" r="11" fill="url(#glowV)"/>
+      </g>
+      <path d="M16 3a13 13 0 1 0 13 13" fill="none" stroke="url(#vp)" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="18" cy="14" r="11" fill="#140f29"/>
+      <use href="#spark" x="20" y="9" width="7" height="7"/>
+    </symbol>
+  </defs>
+</svg>
+<div id="root"></div>
+<script>
+  const groups = [
+    ['D. 성운 구름 발전', [
+      ['D1', '겹구름', '원래 D를 다듬음. 보라·분홍 구름이 겹쳐 퍼지고 반짝임 하나'],
+      ['D2', '소용돌이 성운', '구슬 안에 나선 가스. 은하 느낌을 섞음'],
+      ['D3', '단순형', '16px 파비콘에서도 또렷하게. 그라데이션 + 별 하나'],
+    ]],
+    ['D + 초승달', [
+      ['DF1', '성운 초승달', '초승달 모양 안에 성운 구름. 비어 있는 쪽에 별'],
+      ['DF2', '달의 위상', '성운 구슬에 그림자가 져서 초승달 부분만 빛남'],
+      ['DF3', '일식', '어두운 원 뒤로 성운 빛이 초승달 모양으로 새어 나옴'],
+    ]],
+  ]
+  const icon = (id, s) => `<svg width="${s}" height="${s}"><use href="#${id}"/></svg>`
+  document.getElementById('root').innerHTML = groups.map(([title, items]) => `<h1>${title}</h1>` + items.map(([id, name, desc]) => `<section>${['', 'light'].map(theme => `
+    <div class="cell ${theme}">
+      <h2>${id}. ${name}</h2>
+      <div class="mark">${icon(id, 52)}<span class="grad">Nebula</span></div>
+      <div class="row">${icon(id, 72)}${icon(id, 32)}${icon(id, 16)}<div class="app">${icon(id, 44)}</div><div class="bar">${icon(id, 20)}<span class="grad">Nebula</span></div></div>
+      ${theme ? '' : `<div class="tag">${desc}</div>`}
+    </div>`).join('')}</section>`).join('')).join('')
+</script>
+</body></html>
