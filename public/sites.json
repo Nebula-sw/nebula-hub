@@ -1,7 +1,7 @@
 [
   {
     "id": "sw",
-    "name": "네뷸라 레이드",
+    "name": "로스트아크",
     "game": "로스트아크",
     "url": "https://sw.nebula.kim",
     "color": "#9680f2",
@@ -13,6 +13,6 @@
     "game": "니케",
     "url": "https://nikke.nebula.kim",
     "color": "#e8678a",
-    "description": "니케 도우미"
+    "description": "캐릭터별 스킬·오버로드·큐브·소장품 육성 가이드"
   }
 ]
