@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><title>Nebula 로고 시안 2</title>
+<html lang="ko"><head><meta charset="utf-8"><title>Nebula 로고 시안 3</title>
 <style>
   body { margin: 0; font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #0f0d16; color: #f1eef8; }
   section { display: grid; grid-template-columns: 1fr 1fr; }
@@ -33,8 +33,8 @@
     <filter id="soft"><feGaussianBlur stdDeviation=".9"/></filter>
     <filter id="soft2"><feGaussianBlur stdDeviation="1.6"/></filter>
 
-    <!-- 반짝임(네 갈래 별) -->
-    <symbol id="spark" viewBox="-1 -1 2 2"><path d="M0-1C.12-.25.25-.12 1 0 .25.12.12.25 0 1-.12.25-.25.12-1 0-.25-.12-.12-.25 0-1Z" fill="#fff"/></symbol>
+    <!-- 별: 빛 번짐이 있는 동그란 점 (네 갈래 반짝이 모양은 쓰지 않음) -->
+    <symbol id="spark" viewBox="-1 -1 2 2"><circle r="1" fill="url(#glowW)"/><circle r=".3" fill="#fff"/></symbol>
 
     <!-- D1. 성운 구름 다듬기: 구름층 여러 겹 + 반짝임 -->
     <symbol id="D1" viewBox="0 0 32 32">
