@@ -13,9 +13,12 @@ for (const [dir, desc] of targets) {
   await og.waitForTimeout(300)
   await og.screenshot({ path: `${dir}/og.png` })
 }
-// 휴대폰 홈 화면 아이콘 (180×180, 어두운 배경 꽉 채움 — 모서리는 휴대폰이 알아서 둥글게 깎음)
-const icon = await b.newPage({ viewport: { width: 180, height: 180 } })
-await icon.goto(`file://${here}icon.html`)
-await icon.waitForTimeout(200)
-for (const [dir] of targets) await icon.screenshot({ path: `${dir}/apple-touch-icon.png` })
+// 휴대폰 홈 화면 아이콘: 아이폰용 180, 안드로이드 앱 설치용 192·512 (manifest.webmanifest 에서 씀)
+for (const size of [180, 192, 512]) {
+  const icon = await b.newPage({ viewport: { width: size, height: size } })
+  await icon.goto(`file://${here}icon.html`)
+  await icon.waitForTimeout(200)
+  const name = size === 180 ? 'apple-touch-icon.png' : `icon-${size}.png`
+  for (const [dir] of targets) await icon.screenshot({ path: `${dir}/${name}` })
+}
 await b.close()

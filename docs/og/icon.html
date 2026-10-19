@@ -1,5 +1,9 @@
 <!doctype html>
-<!-- 휴대폰 홈 화면 아이콘(180×180) 원본. 모서리는 휴대폰이 알아서 둥글게 깎음 -->
-<body style="margin:0;width:180px;height:180px;display:grid;place-items:center;background:linear-gradient(160deg,#2a2050,#120e22)">
-  <img src="../../public/logo.svg" style="width:140px;height:140px">
-</body>
+<!-- 홈 화면 아이콘 원본 (정사각형, 어두운 배경 꽉 채움). 모서리·모양은 휴대폰이 알아서 깎음.
+     로고를 가운데 70% 안에 둬서 안드로이드가 동그랗게 잘라도 로고가 안 잘림 -->
+<style>
+  html, body { margin: 0; width: 100vw; height: 100vh; }
+  body { display: grid; place-items: center; background: linear-gradient(160deg, #2a2050, #120e22); }
+  img { width: 70vw; height: 70vw; }
+</style>
+<body><img src="../../public/logo.svg"></body>

@@ -6,6 +6,12 @@
     <title>Nebula</title>
     <meta name="description" content="게임 도우미 사이트 모음" />
     <!-- 탭 아이콘 · 홈 화면 아이콘 · 카톡 등 공유 썸네일 (이미지 원본: docs/og/) -->
+    <!-- 스마트폰 홈 화면에 추가했을 때: 앱 이름·아이콘·주소창 없이 앱처럼 열기 (manifest.webmanifest) -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#15121f" />
+    <meta name="apple-mobile-web-app-title" content="Nebula" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
@@ -93,6 +99,26 @@
       .card .name { margin-top: 4px; font-size: 20px; font-weight: 800; }
       .card .desc { margin-top: 8px; font-size: 13px; color: var(--muted); line-height: 1.5; }
       .card .url { margin-top: 12px; font-size: 12px; color: var(--c); }
+
+      /* ── 홈 화면에 추가하기 안내 ── */
+      .guide { margin-top: 48px; padding: 22px; border-radius: 16px; background: var(--card); border: 1px solid var(--border); }
+      .guide h2 { font-size: 20px; font-weight: 800; }
+      .guide .sub { margin-top: 6px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+      .tabs { margin-top: 16px; display: inline-flex; gap: 3px; padding: 3px; border-radius: 10px; background: color-mix(in srgb, var(--border) 70%, transparent); }
+      .tabs button { font: inherit; font-size: 14px; border: 0; cursor: pointer; padding: 7px 14px; border-radius: 8px; background: none; color: var(--muted); }
+      .tabs button.on { background: var(--accent); color: #fff; font-weight: 700; }
+      .steps { margin-top: 16px; display: grid; gap: 10px; counter-reset: step; padding: 0; list-style: none; }
+      .steps li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.6; }
+      .steps li::before {
+        counter-increment: step; content: counter(step); flex: none; width: 26px; height: 26px; border-radius: 50%;
+        display: grid; place-items: center; font-size: 13px; font-weight: 800; color: #fff; background: var(--accent);
+      }
+      .steps b { font-weight: 700; }
+      .steps .ico { display: inline-flex; vertical-align: -4px; padding: 2px 5px; margin: 0 2px; border-radius: 6px; border: 1px solid var(--border); }
+      .steps .ico svg { width: 16px; height: 16px; }
+      .note { margin-top: 14px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+      .install { margin-top: 14px; font: inherit; font-size: 14px; font-weight: 700; padding: 10px 16px; border-radius: 10px; border: 0; cursor: pointer; background: var(--accent); color: #fff; }
+      [hidden] { display: none !important; }
     </style>
   </head>
   <body>
@@ -100,6 +126,46 @@
       <h1><img src="/logo.svg" alt=""> Nebula</h1>
       <p class="lead">게임 도우미 사이트 모음</p>
       <div class="grid" id="sites"></div>
+
+      <!-- 스마트폰 홈 화면에 추가하는 방법 (기기를 보고 맞는 탭을 먼저 보여줌) -->
+      <section class="guide" id="install">
+        <h2>📱 홈 화면에 앱처럼 추가하기</h2>
+        <p class="sub">
+          설치 없이, 사이트를 스마트폰 홈 화면에 아이콘으로 꺼내 둘 수 있어요. 누르면 주소창 없이 앱처럼 열려요.<br />
+          사이트마다 따로 추가해요. 위에서 원하는 사이트에 먼저 들어간 다음 아래 순서대로 하면 돼요.
+        </p>
+        <div class="tabs" role="tablist">
+          <button data-tab="ios">아이폰</button>
+          <button data-tab="android">안드로이드</button>
+          <button data-tab="samsung">삼성 인터넷</button>
+        </div>
+        <ol class="steps" data-panel="ios">
+          <li><span><b>Safari</b>로 사이트를 열어요. (크롬 앱도 공유 버튼에서 같은 방법으로 돼요)</span></li>
+          <li><span>화면 아래(아이패드는 위)의 <b>공유 버튼</b>
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M5 11v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8"/></svg></span>을 눌러요.</span></li>
+          <li><span>목록을 아래로 내려서 <b>홈 화면에 추가</b>를 눌러요.</span></li>
+          <li><span>이름을 확인하고 오른쪽 위 <b>추가</b>를 누르면 끝!</span></li>
+        </ol>
+        <ol class="steps" data-panel="android" hidden>
+          <li><span><b>크롬</b>으로 사이트를 열어요.</span></li>
+          <li><span>오른쪽 위 <b>점 세 개 메뉴</b>
+            <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></span>를 눌러요.</span></li>
+          <li><span><b>홈 화면에 추가</b> (또는 <b>앱 설치</b>)를 눌러요.</span></li>
+          <li><span><b>설치</b> 또는 <b>추가</b>를 누르면 홈 화면에 아이콘이 생겨요.</span></li>
+        </ol>
+        <ol class="steps" data-panel="samsung" hidden>
+          <li><span><b>삼성 인터넷</b>으로 사이트를 열어요.</span></li>
+          <li><span>아래쪽 <b>메뉴 버튼</b>
+            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></span>을 눌러요.</span></li>
+          <li><span><b>현재 페이지 추가</b> → <b>홈 화면</b>을 눌러요.</span></li>
+          <li><span><b>추가</b>를 누르면 끝!</span></li>
+        </ol>
+        <!-- 안드로이드 크롬에서 바로 설치할 수 있을 때만 보이는 버튼 (이 허브 페이지를 설치) -->
+        <button class="install" id="installBtn" hidden>Nebula 허브를 지금 설치하기</button>
+        <p class="note">
+          홈 화면 아이콘을 길게 눌러 <b>삭제</b>하면 언제든 지울 수 있어요. 저장된 API 키·테마 설정은 사이트마다 따로예요.
+        </p>
+      </section>
     </main>
     <script>
       // sites.json 을 읽어서 카드로 그림 (새 사이트는 sites.json 에만 추가하면 여기에도 자동으로 나옴)
@@ -117,6 +183,33 @@
             )
             .join('')
         })
+    </script>
+    <script>
+      // 홈 화면 추가 안내: 탭 전환 + 지금 기기에 맞는 탭을 먼저 보여주기
+      const ua = navigator.userAgent
+      const first = /SamsungBrowser/i.test(ua) ? 'samsung' : /Android/i.test(ua) ? 'android' : 'ios'
+      function showTab(id) {
+        document.querySelectorAll('.tabs button').forEach((b) => b.classList.toggle('on', b.dataset.tab === id))
+        document.querySelectorAll('.steps').forEach((ol) => (ol.hidden = ol.dataset.panel !== id))
+      }
+      document.querySelectorAll('.tabs button').forEach((b) => (b.onclick = () => showTab(b.dataset.tab)))
+      showTab(first)
+
+      // 안드로이드 크롬 등에서 '설치 가능' 신호가 오면 바로 설치 버튼을 보여줌
+      let deferred = null
+      const installBtn = document.getElementById('installBtn')
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault()
+        deferred = e
+        installBtn.hidden = false
+      })
+      installBtn.onclick = async () => {
+        if (!deferred) return
+        deferred.prompt()
+        await deferred.userChoice
+        deferred = null
+        installBtn.hidden = true
+      }
     </script>
     <!-- 이 페이지에도 맨 위 전환 바 -->
     <script src="/switcher.js" defer></script>
