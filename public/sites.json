@@ -1,9 +1,9 @@
 [
   {
-    "id": "sw",
+    "id": "loa",
     "name": "로스트아크",
     "game": "로스트아크",
-    "url": "https://sw.nebula.kim",
+    "url": "https://loa.nebula.kim",
     "color": "#9680f2",
     "description": "원정대 등록하면 레이드 공대를 자동으로 짜줘요"
   },

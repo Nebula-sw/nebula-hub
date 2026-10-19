@@ -12,7 +12,7 @@
  * → 새 사이트를 추가할 때는 sites.json 에 한 줄만 추가하면 모든 사이트의 바에 자동으로 나타남
  *
  * 선택 옵션 (script 태그 속성):
- *   data-site="sw"            지금 사이트 id를 직접 지정 (localhost 개발 중일 때 등)
+ *   data-site="loa"           지금 사이트 id를 직접 지정 (localhost 개발 중일 때 등)
  *   data-sites="/sites.json"  목록 파일 주소를 바꿀 때 (개발·테스트용)
  *
  * ── 테마 약속 (사이트가 지킬 것) ──
