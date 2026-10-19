@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>치노 2차</title>
+<style>
+  body { margin: 0; background: #f6f3fb; font-family: system-ui, 'Apple SD Gothic Neo', sans-serif; }
+  .row { display: flex; gap: 24px; align-items: center; padding: 20px; }
+  .dark { background: #15121f; }
+  img { height: 300px; border-radius: 12px; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <linearGradient id="c-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ecc99c"/><stop offset=".55" stop-color="#f5e3c8"/><stop offset="1" stop-color="#fbf3e8"/></linearGradient>
+  <linearGradient id="c-ear" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a873"/><stop offset="1" stop-color="#e9c398"/></linearGradient>
+  <linearGradient id="c-ruff" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8ecdb"/><stop offset="1" stop-color="#fbf4ea"/></linearGradient>
+
+  <!-- 치노 얼굴 (viewBox 0 0 100 100) -->
+  <symbol id="chino" viewBox="0 0 100 100">
+    <!-- 목 둘레 복슬 갈기 -->
+    <path d="M14 58 C12 70 18 82 28 88 C24 90 30 94 36 92 C38 96 46 96 50 93 C54 96 62 96 64 92 C70 94 76 90 72 88 C82 82 88 70 86 58 C80 66 66 70 50 70 C34 70 20 66 14 58 Z" fill="url(#c-ruff)"/>
+    <!-- 귀: 옆으로 비스듬히 선 둥근 귀, 끝이 바깥으로 살짝 처짐 -->
+    <path d="M37 22 C31 13 20 9 11 12 C6 14 6 20 10 25 C15 30 23 33 30 35 Z" fill="url(#c-ear)"/>
+    <path d="M11 12 C6 14 6 20 10 25 C11 20 14 16 19 14 C16 12 13 11.5 11 12 Z" fill="#c38a52" opacity=".55"/>
+    <path d="M33 24 C28 18 21 15 16 17 C15 21 21 28 29 32 Z" fill="#f0b9a1" opacity=".4"/>
+    <path d="M63 22 C69 13 80 9 89 12 C94 14 94 20 90 25 C85 30 77 33 70 35 Z" fill="url(#c-ear)"/>
+    <path d="M89 12 C94 14 94 20 90 25 C89 20 86 16 81 14 C84 12 87 11.5 89 12 Z" fill="#c38a52" opacity=".55"/>
+    <path d="M67 24 C72 18 79 15 84 17 C85 21 79 28 71 32 Z" fill="#f0b9a1" opacity=".4"/>
+    <!-- 머리 (위는 살구색, 아래로 갈수록 크림) + 볼 털 -->
+    <path d="M50 17 C67 17 80 28 80 43 C80 50 84 54 82 58 C79 57 78 60 76 61 C72 66 62 72 50 72 C38 72 28 66 24 61 C22 60 21 57 18 58 C16 54 20 50 20 43 C20 28 33 17 50 17 Z" fill="url(#c-top)"/>
+    <!-- 이마 가운데 흰 줄 → 흰 주둥이·볼 -->
+    <path d="M50 19 C53 25 53.5 33 55 40 C62 42 70 48 71 56 C66 66 58 71 50 71 C42 71 34 66 29 56 C30 48 38 42 45 40 C46.5 33 47 25 50 19 Z" fill="#fffaf2"/>
+    <!-- 주둥이 (조금 앞으로 나온 여우형) -->
+    <ellipse cx="50" cy="57" rx="12" ry="10.5" fill="#ffffff"/>
+    <!-- 짙은 회색 아랫입술·턱 (코 바로 아래 작게) -->
+    <ellipse cx="50" cy="64" rx="5.5" ry="2.3" fill="#62554f" opacity=".85"/>
+    <path d="M50 58.5 V61.8" stroke="#4a3d3a" stroke-width=".9" stroke-linecap="round"/>
+    <!-- 코 (크고 짙은 갈색) -->
+    <path d="M43 52.5 C43 48.6 46.4 47.5 50 47.5 C53.6 47.5 57 48.6 57 52.5 C57 56 53 58.8 50 58.8 C47 58.8 43 56 43 52.5 Z" fill="#33231f"/>
+    <ellipse cx="47.2" cy="50.2" rx="2.1" ry="1.1" fill="#fff" opacity=".35"/>
+    <!-- 눈 (살짝 처진 순한 눈 + 진한 눈테) -->
+    <g>
+      <ellipse cx="37" cy="42" rx="4.7" ry="4.9" fill="#1c110b"/>
+      <ellipse cx="37" cy="42.3" rx="3.5" ry="3.7" fill="#4b2c19"/>
+      <circle cx="38.6" cy="40.4" r="1.5" fill="#fff"/><circle cx="35.8" cy="44" r=".6" fill="#fff" opacity=".7"/>
+      <ellipse cx="63" cy="42" rx="4.7" ry="4.9" fill="#1c110b"/>
+      <ellipse cx="63" cy="42.3" rx="3.5" ry="3.7" fill="#4b2c19"/>
+      <circle cx="64.6" cy="40.4" r="1.5" fill="#fff"/><circle cx="61.8" cy="44" r=".6" fill="#fff" opacity=".7"/>
+      <!-- 바깥쪽으로 살짝 처진 윗눈꺼풀 -->
+      <path d="M31.8 40.5 Q36 36.4 41.6 39" stroke="#2a1a12" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <path d="M68.2 40.5 Q64 36.4 58.4 39" stroke="#2a1a12" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <!-- 처진 눈썹 털 (가운데가 올라간 순한 표정) -->
+      <path d="M31 35.5 Q35.5 32.5 40 33.5" stroke="#d6aa7c" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <path d="M69 35.5 Q64.5 32.5 60 33.5" stroke="#d6aa7c" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    </g>
+    <!-- 수염 -->
+    <path d="M38 57 l-12 -2 M38 60 l-11 1 M62 57 l12 -2 M62 60 l11 1" stroke="#fff" stroke-width=".7" stroke-linecap="round"/>
+  </symbol>
+</defs></svg>
+<div class="row">
+  <svg width="300" height="300"><use href="#chino"/></svg>
+</div>
+<div class="row dark">
+  <svg width="160" height="160"><use href="#chino"/></svg>
+  <svg width="64" height="64"><use href="#chino"/></svg>
+  <svg width="32" height="32"><use href="#chino"/></svg>
+  <svg width="20" height="20"><use href="#chino"/></svg>
+</div>
+</body></html>
