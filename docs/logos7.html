@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Nebula 로고 시안 7</title>
+<style>
+  body { margin: 0; font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #0f0d16; color: #f1eef8; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .cell { padding: 22px 20px 16px; display: flex; flex-direction: column; align-items: center; gap: 14px; border-bottom: 1px solid #221e30; }
+  .cell.light { background: #f6f3fb; color: #1d1929; border-color: #e3dff0; }
+  .mark { display: flex; align-items: center; gap: 12px; font-size: 34px; font-weight: 800; letter-spacing: -.01em; }
+  .tag { font-size: 13px; color: #9a93b0; text-align: center; }
+  .row { display: flex; gap: 18px; align-items: center; }
+  .bar { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 800; padding: 8px 12px; border-radius: 8px; background: #15121f; color: #f1eef8; }
+  .light .bar { background: #fff; color: #1d1929; box-shadow: 0 0 0 1px #e3dff0; }
+  .app { width: 64px; height: 64px; border-radius: 15px; background: linear-gradient(160deg, #241c44, #120e22); display: grid; place-items: center; box-shadow: 0 0 0 1px #2a2638; }
+  h2 { margin: 0; font-size: 15px; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="vp" gradientUnits="userSpaceOnUse" x1="2" y1="6" x2="30" y2="28"><stop offset="0" stop-color="#9a7cff"/><stop offset="1" stop-color="#f0709c"/></linearGradient>
+    <linearGradient id="vp2" gradientUnits="userSpaceOnUse" x1="2" y1="8" x2="26" y2="30"><stop offset="0" stop-color="#7f65e3"/><stop offset=".55" stop-color="#b47cf0"/><stop offset="1" stop-color="#f58bb0"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe794"/><stop offset="1" stop-color="#ffaa4a"/></linearGradient>
+    <radialGradient id="halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2c4" stop-opacity=".8"/><stop offset="1" stop-color="#fff2c4" stop-opacity="0"/></radialGradient>
+
+    <symbol id="star" viewBox="-1.3 -1.3 2.6 2.6" overflow="visible">
+      <path d="M0.000,-1.000 L0.270,-0.372 L0.951,-0.309 L0.437,0.142 L0.588,0.809 L0.000,0.460 L-0.588,0.809 L-0.437,0.142 L-0.951,-0.309 L-0.270,-0.372Z" stroke-width=".32" stroke-linejoin="round"/>
+    </symbol>
+    <!-- 큰 구름 (아이콘 칸을 꽉 채우고 가운데 정렬) -->
+    <g id="cloud">
+      <rect x="1.5" y="16.5" width="29" height="11" rx="5.5"/>
+      <circle cx="9.8" cy="17" r="6.6"/>
+      <circle cx="18.8" cy="13.8" r="8.3"/>
+      <circle cx="25.8" cy="19" r="4.7"/>
+    </g>
+    <mask id="cutStar"><rect width="32" height="32" fill="#fff"/><use href="#star" x="10.5" y="11" width="11" height="11" fill="#000" stroke="#000"/></mask>
+    <mask id="cutStar2"><rect width="32" height="32" fill="#fff"/>
+      <use href="#star" x="13.5" y="10.5" width="9.5" height="9.5" fill="#000" stroke="#000"/>
+      <circle cx="9" cy="21" r="1.4" fill="#000"/><circle cx="24.5" cy="22" r="1.1" fill="#000"/></mask>
+
+    <!-- 1. 금별 하나 -->
+    <symbol id="A" viewBox="0 0 32 32">
+      <use href="#cloud" fill="url(#vp)"/>
+      <use href="#star" x="10.5" y="11" width="11" height="11" fill="url(#gold)" stroke="url(#gold)"/>
+    </symbol>
+    <!-- 2. 별 모양 구멍 -->
+    <symbol id="B" viewBox="0 0 32 32">
+      <g mask="url(#cutStar)"><use href="#cloud" fill="url(#vp)"/></g>
+    </symbol>
+    <!-- 3. 빛나는 별 (후광) -->
+    <symbol id="C" viewBox="0 0 32 32">
+      <use href="#cloud" fill="url(#vp2)"/>
+      <circle cx="16" cy="17" r="8" fill="url(#halo)"/>
+      <use href="#star" x="11" y="12" width="10" height="10" fill="#fff" stroke="#fff"/>
+    </symbol>
+    <!-- 4. 별 + 작은 별빛 점들 -->
+    <symbol id="D" viewBox="0 0 32 32">
+      <use href="#cloud" fill="url(#vp)"/>
+      <use href="#star" x="13" y="10.5" width="10" height="10" fill="url(#gold)" stroke="url(#gold)"/>
+      <circle cx="8.8" cy="20.5" r="1.3" fill="#ffe7a8"/><circle cx="24.6" cy="22" r="1" fill="#ffe7a8" opacity=".9"/><circle cx="12" cy="24.3" r=".7" fill="#fff" opacity=".8"/>
+    </symbol>
+    <!-- 5. 구름 속 별자리 -->
+    <symbol id="E" viewBox="0 0 32 32">
+      <use href="#cloud" fill="url(#vp2)"/>
+      <path d="M7.5 22 12.5 18.5 17.5 20.5" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="7.5" cy="22" r="1.3" fill="#fff" opacity=".85"/><circle cx="12.5" cy="18.5" r="1.1" fill="#fff" opacity=".9"/>
+      <use href="#star" x="15.5" y="12" width="9" height="9" fill="url(#gold)" stroke="url(#gold)"/>
+    </symbol>
+    <!-- 6. 구멍 별 + 점 (한 색으로 찍기 좋은 형태) -->
+    <symbol id="F" viewBox="0 0 32 32">
+      <g mask="url(#cutStar2)"><use href="#cloud" fill="url(#vp)"/></g>
+    </symbol>
+  </defs>
+</svg>
+<div class="grid" id="grid"></div>
+<script>
+  const items = [
+    ['A', '금별 하나', '큰 구름 한가운데 금색 별. 가장 단순하고 또렷함'],
+    ['B', '별 모양 구멍', '구름에 별을 뚫음. 배경색이 별이 되어 어디서나 어울림'],
+    ['C', '빛나는 흰 별', '구름 안에서 은은하게 빛나는 흰 별'],
+    ['D', '별 + 별빛 점', '금별 옆에 작은 별빛 점 몇 개. 성운 느낌'],
+    ['E', '구름 속 별자리', '구름 안에 점·선으로 이어진 별자리 + 금별'],
+    ['F', '구멍 별 + 점', 'B에 작은 점 구멍을 더함. 한 색으로 찍어도 됨'],
+  ]
+  const icon = (id, s) => `<svg width="${s}" height="${s}"><use href="#${id}"/></svg>`
+  document.getElementById('grid').innerHTML = items.map(([id, name, desc], i) => ['', 'light'].map(theme => `
+    <div class="cell ${theme}">
+      <h2>${i + 1}. ${name}</h2>
+      <div class="mark">${icon(id, 56)}<span>Nebula</span></div>
+      <div class="row">${icon(id, 72)}${icon(id, 32)}${icon(id, 16)}<div class="app">${icon(id, 48)}</div><div class="bar">${icon(id, 22)}Nebula</div></div>
+      ${theme ? '' : `<div class="tag">${desc}</div>`}
+    </div>`).join('')).join('')
+</script>
+</body></html>
