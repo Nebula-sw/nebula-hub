@@ -38,6 +38,7 @@
   const script = document.currentScript
   const sitesUrl = script?.dataset.sites || new URL('sites.json', script?.src || 'https://nebula.kim/').href
   const hubUrl = new URL('/', script?.src || 'https://nebula.kim/').href
+  const logoUrl = new URL('logo.svg', script?.src || 'https://nebula.kim/').href // 구름+별 로고
   const forcedId = script?.dataset.site
   const html = document.documentElement
 
@@ -132,13 +133,9 @@
           border-right: 1px solid var(--border); font-weight: 800; font-size: 15px; letter-spacing: .02em;
           white-space: nowrap;
         }
-        /* 로고 색: 별은 보라, 글자는 보라→분홍 그라데이션 */
-        .brand .star { color: #9680f2; }
-        .brand .word {
-          background: linear-gradient(90deg, #9680f2, #e8678a); -webkit-background-clip: text; background-clip: text;
-          color: transparent;
-        }
-        .brand:hover { filter: brightness(1.15); }
+        .brand img { width: 24px; height: 24px; display: block; }
+        .brand { color: var(--fg); }
+        .brand:hover { filter: brightness(1.12); }
         .site, .theme-btn {
           display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px;
           border-radius: 8px; color: var(--muted); white-space: nowrap;
@@ -177,7 +174,7 @@
       </style>
       <div class="wrap">
         <nav aria-label="Nebula 사이트">
-          <a class="brand" href="${hubUrl}" title="Nebula 사이트 모음"><span class="star">✦</span><span class="word">Nebula</span></a>
+          <a class="brand" href="${hubUrl}" title="Nebula 사이트 모음"><img src="${logoUrl}" alt=""><span>Nebula</span></a>
           ${sites
             .map((s) => {
               const current = s.id === currentId

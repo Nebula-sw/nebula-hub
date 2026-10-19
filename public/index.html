@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nebula</title>
     <meta name="description" content="게임 도우미 사이트 모음" />
+    <!-- 탭 아이콘 · 홈 화면 아이콘 · 카톡 등 공유 썸네일 (이미지 원본: docs/og/) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Nebula" />
+    <meta property="og:title" content="Nebula" />
+    <meta property="og:description" content="게임 도우미 사이트 모음" />
+    <meta property="og:url" content="https://nebula.kim/" />
+    <meta property="og:image" content="https://nebula.kim/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <script>
       // 저장된 화면 모드를 그리기 전에 적용 (깜빡임 방지). 바꾸는 화면은 맨 위 바의 [테마] 버튼(switcher.js)
       try {
@@ -67,8 +79,8 @@
       }
       main { max-width: 880px; margin: 0 auto; padding: 72px 20px; }
       h1 { font-size: 40px; font-weight: 900; letter-spacing: -0.02em; }
-      h1 .star { color: var(--accent); }
-      h1 .word { background: linear-gradient(90deg, #9680f2, #e8678a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      h1 { display: flex; align-items: center; gap: 14px; }
+      h1 img { width: 64px; height: 64px; }
       .lead { margin-top: 10px; color: var(--muted); }
       .grid { margin-top: 36px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
       a.card {
@@ -85,7 +97,7 @@
   </head>
   <body>
     <main>
-      <h1><span class="star">✦</span> <span class="word">Nebula</span></h1>
+      <h1><img src="/logo.svg" alt=""> Nebula</h1>
       <p class="lead">게임 도우미 사이트 모음</p>
       <div class="grid" id="sites"></div>
     </main>
