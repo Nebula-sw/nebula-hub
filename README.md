@@ -37,3 +37,16 @@ npm install
 npm run dev      # http://localhost:8787
 ```
 배포는 Cloudflare 대시보드에서 이 저장소를 연결(Deploy command `npx wrangler deploy`)하고, Custom domain에 `nebula.kim`(루트)을 추가합니다.
+
+## 테마 (맨 위 바의 [테마] 버튼)
+
+바가 화면 모드(라이트/다크/시스템)와 색 테마를 고르는 창을 그려 줍니다. 사이트는 아래 약속만 지키면 됩니다.
+
+- 화면 모드: `<html data-theme="light|dark">` (속성 없음 = 시스템), 저장 이름 `theme`
+- 색 테마: `<html data-palette="id">`, 저장 이름 `palette`
+- 색 테마 목록을 바에 알려주기 (없으면 화면 모드만 보임):
+  ```js
+  window.nebulaTheme = { defaultPalette: 'red', palettes: [{ id: 'red', name: '레드', color: '#ff4655' }] }
+  ```
+- 새로고침 깜빡임 방지: `<head>`에 저장값을 먼저 붙이는 짧은 스크립트 (public/index.html 참고)
+- 사이트 CSS는 `:root[data-theme="light"]` 와 `@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) }` 두 곳에 라이트 색을 넣으면 됩니다.

@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nebula</title>
     <meta name="description" content="게임 도우미 사이트 모음" />
+    <script>
+      // 저장된 화면 모드를 그리기 전에 적용 (깜빡임 방지). 바꾸는 화면은 맨 위 바의 [테마] 버튼(switcher.js)
+      try {
+        const t = localStorage.getItem('theme')
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+      } catch {}
+    </script>
     <style>
       /* nebula.kim 첫 화면: sites.json 의 사이트들을 카드로 보여줌 */
       :root {
@@ -22,8 +29,22 @@
         --nebula-bar-border: #2a2638;
         --nebula-bar-active: #2a2638;
       }
+      /* 라이트 모드: 맨 위 바에서 '라이트'를 골랐거나, '시스템'인데 기기가 라이트 모드일 때 */
+      :root[data-theme='light'] {
+        color-scheme: light;
+        --bg: #f6f3fb;
+        --card: #ffffff;
+        --border: #e3dff0;
+        --fg: #1d1929;
+        --muted: #675f7f;
+        --nebula-bar-bg: #ffffff;
+        --nebula-bar-fg: #1d1929;
+        --nebula-bar-muted: #675f7f;
+        --nebula-bar-border: #e3dff0;
+        --nebula-bar-active: #ece8f6;
+      }
       @media (prefers-color-scheme: light) {
-        :root {
+        :root:not([data-theme='dark']) {
           color-scheme: light;
           --bg: #f6f3fb;
           --card: #ffffff;
