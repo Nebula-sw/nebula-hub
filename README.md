@@ -50,3 +50,9 @@ npm run dev      # http://localhost:8787
   ```
 - 새로고침 깜빡임 방지: `<head>`에 저장값을 먼저 붙이는 짧은 스크립트 (public/index.html 참고)
 - 사이트 CSS는 `:root[data-theme="light"]` 와 `@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) }` 두 곳에 라이트 색을 넣으면 됩니다.
+
+## 공용 알림창
+
+`switcher.js` 를 넣은 사이트는 `window.nebula.alert('메시지')` 로 사이트 디자인 알림창을 띄울 수 있습니다 (브라우저 기본 alert 대신).
+닫히면 끝나는 Promise를 돌려주고, 여러 개면 순서대로 보여줍니다. 스크립트를 못 불러온 경우를 대비해 사이트 쪽에서는
+`window.nebula?.alert ? nebula.alert(msg) : alert(msg)` 처럼 기본 alert로 대신하게 해 두세요.

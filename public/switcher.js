@@ -29,6 +29,12 @@
  *   네뷸라 레이드처럼 --color-night-* / --color-lav-* 테마 변수가 있는 사이트는 자동으로 그 테마 색을 씀
  *
  * 사이트 스타일과 섞이지 않도록 Shadow DOM(바 안쪽만의 독립된 스타일 공간)에 그립니다.
+ *
+ * ── 공용 알림창 ──
+ *   window.nebula.alert('메시지')  → 화면 가운데 사이트 디자인 알림창 (브라우저 기본 alert 대신)
+ *   - 닫히면 끝나는 Promise를 돌려줌 (await nebula.alert('...') 가능)
+ *   - [확인]·Enter·Esc·바깥 클릭으로 닫힘, 여러 개면 순서대로 하나씩, 휴대폰에서도 같은 모양
+ *   - 색은 바와 같은 CSS 변수를 따라감 (--nebula-bar-*, 없으면 --color-night-* / --color-lav-*)
  */
 ;(() => {
   // 같은 페이지에서 두 번 실행되지 않게
@@ -41,6 +47,75 @@
   const logoUrl = new URL('logo.svg', script?.src || 'https://nebula.kim/').href // 구름+별 로고
   const forcedId = script?.dataset.site
   const html = document.documentElement
+
+  // ── 공용 알림창 (window.nebula.alert) ── 바를 못 그려도(목록 실패 등) 알림창은 쓸 수 있게 먼저 준비
+  window.nebula = window.nebula || {}
+  const alertQueue = []
+  let alertHost = null
+  window.nebula.alert = (message) =>
+    new Promise((resolve) => {
+      alertQueue.push({ message: String(message ?? ''), resolve })
+      if (alertQueue.length === 1) showNextAlert()
+    })
+
+  function showNextAlert() {
+    const item = alertQueue[0]
+    if (!item) return
+    if (!alertHost) {
+      alertHost = document.createElement('div')
+      alertHost.id = 'nebula-alert'
+      alertHost.attachShadow({ mode: 'open' })
+      document.body.appendChild(alertHost)
+    }
+    const root = alertHost.shadowRoot
+    root.innerHTML = `
+      <style>
+        :host { all: initial; }
+        .back {
+          --panel: var(--nebula-bar-panel, var(--color-night-900, #1b1828));
+          --fg: var(--nebula-bar-fg, var(--color-night-100, #f1eef8));
+          --border: var(--nebula-bar-border, var(--color-night-700, #3a3450));
+          --accent: var(--nebula-bar-accent, var(--color-lav-600, #7f65e3));
+          position: fixed; inset: 0; z-index: 2147483600; display: flex; align-items: center; justify-content: center;
+          padding: 24px; box-sizing: border-box; background: rgba(0, 0, 0, .5); backdrop-filter: blur(2px);
+          font: 14px/1.6 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+          animation: fade .12s ease-out;
+        }
+        .box {
+          width: 100%; max-width: 360px; box-sizing: border-box; padding: 20px; border-radius: 16px;
+          background: var(--panel); color: var(--fg); border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+        }
+        p { margin: 0; white-space: pre-line; word-break: keep-all; }
+        button {
+          margin-top: 18px; width: 100%; padding: 10px; border: 0; border-radius: 10px; cursor: pointer;
+          background: var(--accent); color: #fff; font: inherit; font-weight: 700;
+        }
+        button:hover { filter: brightness(1.08); }
+        @keyframes fade { from { opacity: 0; } }
+      </style>
+      <div class="back" part="backdrop">
+        <div class="box" role="alertdialog" aria-modal="true"><p></p><button type="button">확인</button></div>
+      </div>`
+    root.querySelector('p').textContent = item.message // 글자 그대로 (HTML로 해석하지 않음)
+    const close = () => {
+      document.removeEventListener('keydown', onKey, true)
+      root.innerHTML = ''
+      alertQueue.shift()
+      item.resolve()
+      showNextAlert()
+    }
+    const onKey = (e) => {
+      if (e.key === 'Escape' || e.key === 'Enter') {
+        e.preventDefault()
+        e.stopPropagation()
+        close()
+      }
+    }
+    root.querySelector('.back').addEventListener('click', (e) => e.target === e.currentTarget && close())
+    root.querySelector('button').addEventListener('click', close)
+    document.addEventListener('keydown', onKey, true)
+    root.querySelector('button').focus()
+  }
 
   const MODES = [
     { id: 'light', label: '라이트' },
