@@ -1,0 +1,9 @@
+# 다른 *.nebula.kim 사이트에서 목록과 전환 바 코드를 불러갈 수 있게 허용 (CORS)
+# 캐시 5분: 사이트를 추가하면 길어도 5분 안에 모든 사이트의 바에 반영됨
+/sites.json
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+
+/switcher.js
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300

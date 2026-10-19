@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nebula</title>
+    <meta name="description" content="게임 도우미 사이트 모음" />
+    <style>
+      /* nebula.kim 첫 화면: sites.json 의 사이트들을 카드로 보여줌 */
+      :root {
+        color-scheme: dark;
+        --bg: #15121f;
+        --card: #201c2e;
+        --border: #2f2a40;
+        --fg: #f3f0fa;
+        --muted: #a29abb;
+        --accent: #9680f2;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          color-scheme: light;
+          --bg: #f6f3fb;
+          --card: #ffffff;
+          --border: #e3dff0;
+          --fg: #1d1929;
+          --muted: #675f7f;
+        }
+      }
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        min-height: 100vh;
+        background: radial-gradient(ellipse at 80% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 55%), var(--bg);
+        color: var(--fg);
+        font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+      }
+      main { max-width: 880px; margin: 0 auto; padding: 72px 20px; }
+      h1 { font-size: 40px; font-weight: 900; letter-spacing: -0.02em; }
+      h1 span { color: var(--accent); }
+      .lead { margin-top: 10px; color: var(--muted); }
+      .grid { margin-top: 36px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+      a.card {
+        display: block; padding: 20px; border-radius: 16px; background: var(--card);
+        border: 1px solid var(--border); color: inherit; text-decoration: none;
+        border-left: 4px solid var(--c); transition: transform 0.15s, border-color 0.15s;
+      }
+      a.card:hover { transform: translateY(-2px); border-color: var(--c); }
+      .card .game { font-size: 12px; color: var(--muted); }
+      .card .name { margin-top: 4px; font-size: 20px; font-weight: 800; }
+      .card .desc { margin-top: 8px; font-size: 13px; color: var(--muted); line-height: 1.5; }
+      .card .url { margin-top: 12px; font-size: 12px; color: var(--c); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>✦ <span>nebula</span></h1>
+      <p class="lead">게임 도우미 사이트 모음</p>
+      <div class="grid" id="sites"></div>
+    </main>
+    <script>
+      // sites.json 을 읽어서 카드로 그림 (새 사이트는 sites.json 에만 추가하면 여기에도 자동으로 나옴)
+      fetch('/sites.json', { cache: 'no-cache' })
+        .then((r) => r.json())
+        .then((sites) => {
+          const esc = (t) => String(t ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c])
+          document.getElementById('sites').innerHTML = sites
+            .map(
+              (s) => `<a class="card" href="${esc(s.url)}" style="--c:${esc(s.color || '#888')}">
+                <div class="game">${esc(s.game)}</div>
+                <div class="name">${esc(s.name)}</div>
+                <div class="desc">${esc(s.description)}</div>
+                <div class="url">${esc(new URL(s.url).host)} →</div>
+              </a>`,
+            )
+            .join('')
+        })
+    </script>
+    <!-- 이 페이지에도 맨 위 전환 바 -->
+    <script src="/switcher.js" defer></script>
+  </body>
+</html>
