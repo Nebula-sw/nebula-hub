@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><title>Nebula 로고 시안 4</title>
+<style>
+  body { margin: 0; font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; background: #0f0d16; color: #f1eef8; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; }
+  .cell { padding: 24px 20px 18px; display: flex; flex-direction: column; align-items: center; gap: 14px; border-bottom: 1px solid #221e30; }
+  .cell.light { background: #f6f3fb; color: #1d1929; border-color: #e3dff0; }
+  .mark { display: flex; align-items: center; gap: 12px; font-size: 34px; font-weight: 800; letter-spacing: -.01em; }
+  .light .mark .word { color: #1d1929; }
+  .mark .word { color: #f1eef8; }
+  .tag { font-size: 13px; color: #9a93b0; text-align: center; }
+  .light .tag { color: #675f7f; }
+  .row { display: flex; gap: 18px; align-items: center; }
+  .bar { display: flex; align-items: center; gap: 6px; font-size: 15px; font-weight: 800; padding: 8px 12px; border-radius: 8px; background: #15121f; color: #f1eef8; }
+  .light .bar { background: #fff; color: #1d1929; box-shadow: 0 0 0 1px #e3dff0; }
+  .app { width: 64px; height: 64px; border-radius: 15px; background: #15121f; display: grid; place-items: center; box-shadow: 0 0 0 1px #2a2638; }
+  .light .app { background: #fff; box-shadow: 0 0 0 1px #e3dff0; }
+  h2 { margin: 0; font-size: 15px; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="vp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b6cf6"/><stop offset="1" stop-color="#f0709c"/></linearGradient>
+    <linearGradient id="vpv" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9d84ff"/><stop offset="1" stop-color="#ef6f9e"/></linearGradient>
+    <linearGradient id="pc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0709c"/><stop offset="1" stop-color="#ffb37a"/></linearGradient>
+    <linearGradient id="bc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4f8dff"/><stop offset="1" stop-color="#8b6cf6"/></linearGradient>
+    <linearGradient id="tail" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#8b6cf6" stop-opacity="0"/><stop offset=".6" stop-color="#b48cff"/><stop offset="1" stop-color="#f0709c"/></linearGradient>
+
+    <!-- 1. 리본 N: 세 조각이 접힌 종이처럼 겹친 N -->
+    <symbol id="L1" viewBox="0 0 32 32">
+      <path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h1A2.5 2.5 0 0 1 11 6.5V28H5Z" fill="#8b6cf6"/>
+      <path d="M21 4h6v21.5A2.5 2.5 0 0 1 24.5 28h-1A2.5 2.5 0 0 1 21 25.5Z" fill="#f0709c"/>
+      <path d="M5 4h6l16 24h-6Z" fill="url(#vp)"/>
+      <path d="M5 4h6l3 4.5H8Z" fill="#fff" opacity=".18"/>
+    </symbol>
+
+    <!-- 2. 가스 구름: 불규칙한 성운 덩어리 + 작은 별 -->
+    <symbol id="L2" viewBox="0 0 32 32">
+      <path d="M6 20c-3-1-4-5-1-7 0-4 4-7 8-5 2-4 8-4 10 0 4-1 7 3 5 6 3 2 2 7-2 7-1 3-5 4-8 2-3 2-7 1-8-1-2 0-4-1-4-2Z" fill="url(#vp)"/>
+      <path d="M9 17c2-3 6-3 8-1 2-2 6-2 7 1" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="26.5" cy="6" r="1.3" fill="#f0709c"/><circle cx="4" cy="27" r="1" fill="#8b6cf6"/>
+    </symbol>
+
+    <!-- 3. 레이어: 겹쳐진 세 장 = 여러 사이트를 묶은 허브 -->
+    <symbol id="L3" viewBox="0 0 32 32">
+      <rect x="3" y="9" width="17" height="17" rx="5" fill="#4f8dff" opacity=".9" transform="rotate(-12 11.5 17.5)"/>
+      <rect x="8" y="6" width="17" height="17" rx="5" fill="#8b6cf6" opacity=".85"/>
+      <rect x="12" y="11" width="17" height="17" rx="5" fill="#f0709c" opacity=".85" transform="rotate(12 20.5 19.5)"/>
+    </symbol>
+
+    <!-- 4. 혜성: 휘어지는 꼬리 + 머리 -->
+    <symbol id="L4" viewBox="0 0 32 32">
+      <path d="M3 29C8 18 15 10 25 7l-1.5 5C15 15 9 21 3 29Z" fill="url(#tail)"/>
+      <path d="M3 29C6 23 11 17 19 13l-1 3.5C12 19 7 24 3 29Z" fill="url(#tail)" opacity=".6"/>
+      <circle cx="25" cy="8.5" r="4.5" fill="url(#pc)"/>
+      <circle cx="26.2" cy="7.3" r="1.4" fill="#fff" opacity=".85"/>
+    </symbol>
+
+    <!-- 5. 포털: 아치형 문 = 다른 게임 사이트로 넘어가는 입구 -->
+    <symbol id="L5" viewBox="0 0 32 32">
+      <path d="M5 29V15a11 11 0 0 1 22 0v14Z" fill="url(#vpv)"/>
+      <path d="M10.5 29V16a5.5 5.5 0 0 1 11 0v13Z" fill="#15121f"/>
+      <circle cx="16" cy="20" r="1.6" fill="#ffd1e3"/>
+    </symbol>
+
+    <!-- 6. 소용돌이 획: 붓으로 한 번에 그은 나선 -->
+    <symbol id="L6" viewBox="0 0 32 32">
+      <path d="M17 16.5c-1.5 1-3.5 0-3.5-2s2.5-4 5-3.5 4.5 3 4 6-3.5 6-8 5.5S6.5 18 7.5 13 13.5 4.5 19 5s9.5 5 9.5 10" fill="none" stroke="url(#vp)" stroke-width="3.4" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- 7. 결정: 면이 나뉜 보석 조각 -->
+    <symbol id="L7" viewBox="0 0 32 32">
+      <path d="M16 2 27 12 16 30Z" fill="#f0709c"/>
+      <path d="M16 2 5 12 16 30Z" fill="#8b6cf6"/>
+      <path d="M5 12h22L16 30Z" fill="url(#vp)" opacity=".85"/>
+      <path d="M16 2 11 12h10Z" fill="#fff" opacity=".35"/>
+    </symbol>
+
+    <!-- 8. 물결 N: 한 획으로 흐르는 N -->
+    <symbol id="L8" viewBox="0 0 32 32">
+      <path d="M6 27V9c0-4 4-5 6-2l8 15c2 3.5 6 2.5 6-1.5V5" fill="none" stroke="url(#vp)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+<div class="grid" id="grid"></div>
+<script>
+  const items = [
+    ['L1', '리본 N', '세 조각이 접힌 종이처럼 겹친 N. 단단하고 이니셜이 바로 읽힘'],
+    ['L2', '가스 구름', '동그라미 대신 불규칙한 성운 덩어리. 귀엽고 말랑한 느낌'],
+    ['L3', '레이어', '겹쳐진 세 장 = 여러 게임 사이트를 묶은 허브'],
+    ['L4', '혜성', '휘어지는 꼬리. 빠르고 가벼운 느낌'],
+    ['L5', '포털', '아치형 문 = 다른 게임 사이트로 넘어가는 입구'],
+    ['L6', '소용돌이 획', '붓으로 한 번에 그은 나선. 성운의 회전'],
+    ['L7', '결정', '면이 나뉜 보석 조각. 게임 아이템 느낌'],
+    ['L8', '물결 N', '한 획으로 흐르는 N. 부드러운 이니셜'],
+  ]
+  const icon = (id, s) => `<svg width="${s}" height="${s}"><use href="#${id}"/></svg>`
+  document.getElementById('grid').innerHTML = items.map(([id, name, desc], i) => ['', 'light'].map(theme => `
+    <div class="cell ${theme}">
+      <h2>${i + 1}. ${name}</h2>
+      <div class="mark">${icon(id, 50)}<span class="word">Nebula</span></div>
+      <div class="row">${icon(id, 64)}${icon(id, 32)}${icon(id, 16)}<div class="app">${icon(id, 42)}</div><div class="bar">${icon(id, 20)}Nebula</div></div>
+      ${theme ? '' : `<div class="tag">${desc}</div>`}
+    </div>`).join('')).join('')
+</script>
+</body></html>
