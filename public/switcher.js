@@ -150,15 +150,22 @@
         <style>
           :host { all: initial; }
           .toast {
-            position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 2147483601;
-            transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
-            max-width: calc(100vw - 32px); box-sizing: border-box; padding: 10px 16px; border-radius: 999px;
-            background: var(--nebula-bar-panel, var(--color-night-900, #1b1828)); color: var(--nebula-bar-fg, var(--color-night-100, #f1eef8));
-            border: 1px solid var(--nebula-bar-border, var(--color-night-700, #3a3450)); box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
-            font: 14px/1.4 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; white-space: pre-line; text-align: center;
-            transition: opacity .18s, transform .18s;
+            position: fixed; left: 50%; bottom: calc(32px + env(safe-area-inset-bottom)); z-index: 2147483601;
+            transform: translate(-50%, 16px) scale(.96); opacity: 0; pointer-events: none;
+            width: max-content; max-width: calc(100vw - 32px); box-sizing: border-box; padding: 13px 22px; border-radius: 14px;
+            display: flex; align-items: center; gap: 10px;
+            /* 사이트 강조색 바탕 + 흰 글씨 (눈에 잘 띄게) */
+            background: var(--nebula-bar-accent, var(--color-lav-600, #7f65e3)); color: #fff;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .4), 0 0 0 1px rgba(255, 255, 255, .12) inset;
+            font: 600 16px/1.4 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; white-space: pre-line; text-align: center;
+            transition: opacity .2s, transform .25s cubic-bezier(.2, .9, .3, 1.2);
           }
-          .toast.show { opacity: 1; transform: translate(-50%, 0); }
+          /* 앞에 붙는 동그란 체크 표시 */
+          .toast::before {
+            content: '✓'; flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
+            background: rgba(255, 255, 255, .25); font-size: 13px; font-weight: 800;
+          }
+          .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
         </style>
         <div class="toast" role="status" aria-live="polite"></div>`
       document.body.appendChild(toastHost)
@@ -168,7 +175,7 @@
     // 다음 그림 차례에 show를 붙여야 아래에서 올라오는 움직임이 보임
     requestAnimationFrame(() => el.classList.add('show'))
     clearTimeout(toastTimer)
-    toastTimer = setTimeout(() => el.classList.remove('show'), 2000)
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2200)
   }
 
   const MODES = [
