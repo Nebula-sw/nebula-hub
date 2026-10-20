@@ -38,6 +38,7 @@
  *   window.nebula.confirm('메시지', { ok: '초기화', danger: true })  → [취소]/[확인] 확인창
  *   - 확인 누르면 true, 취소·Esc·바깥 클릭이면 false 인 Promise (if (await nebula.confirm('...')) { ... })
  *   - Enter = 확인, ok = 확인 버튼 글자, danger = 확인 버튼을 빨간색으로 (지우기 같은 되돌릴 수 없는 작업)
+ *   window.nebula.toast('조합을 복사했어요.')  → 화면 아래에 잠깐 떴다 사라지는 짧은 안내 (누를 필요 없음)
  */
 ;(() => {
   // 같은 페이지에서 두 번 실행되지 않게
@@ -136,6 +137,38 @@
     root.querySelector('.cancel')?.addEventListener('click', () => close(false))
     document.addEventListener('keydown', onKey, true)
     ok.focus()
+  }
+
+  // ── 토스트 (window.nebula.toast) ── 화면 아래 가운데에 약 2초 떴다가 사라짐. 새로 오면 이전 것을 바꿈
+  let toastHost = null
+  let toastTimer = 0
+  window.nebula.toast = (message) => {
+    if (!toastHost) {
+      toastHost = document.createElement('div')
+      toastHost.id = 'nebula-toast'
+      toastHost.attachShadow({ mode: 'open' }).innerHTML = `
+        <style>
+          :host { all: initial; }
+          .toast {
+            position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 2147483601;
+            transform: translate(-50%, 12px); opacity: 0; pointer-events: none;
+            max-width: calc(100vw - 32px); box-sizing: border-box; padding: 10px 16px; border-radius: 999px;
+            background: var(--nebula-bar-panel, var(--color-night-900, #1b1828)); color: var(--nebula-bar-fg, var(--color-night-100, #f1eef8));
+            border: 1px solid var(--nebula-bar-border, var(--color-night-700, #3a3450)); box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+            font: 14px/1.4 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif; white-space: pre-line; text-align: center;
+            transition: opacity .18s, transform .18s;
+          }
+          .toast.show { opacity: 1; transform: translate(-50%, 0); }
+        </style>
+        <div class="toast" role="status" aria-live="polite"></div>`
+      document.body.appendChild(toastHost)
+    }
+    const el = toastHost.shadowRoot.querySelector('.toast')
+    el.textContent = String(message ?? '')
+    // 다음 그림 차례에 show를 붙여야 아래에서 올라오는 움직임이 보임
+    requestAnimationFrame(() => el.classList.add('show'))
+    clearTimeout(toastTimer)
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2000)
   }
 
   const MODES = [
