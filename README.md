@@ -5,7 +5,7 @@
 허브는 세 가지를 맡습니다.
 
 1. **첫 화면** (`nebula.kim`): 사이트 카드 목록과 "홈 화면에 앱처럼 추가하기" 안내
-2. **모든 사이트 공용 기능** (`switcher.js`): 맨 위 사이트 전환 바, 테마(라이트/다크/시스템 + 색 테마) 선택, 공용 알림창
+2. **모든 사이트 공용 기능** (`switcher.js`): 맨 위 사이트 전환 바, 테마(라이트/다크/시스템 + 색 테마 + 글꼴) 선택, 공용 알림창·확인창·토스트
 3. **공용 디자인 원본**: 구름+별 로고, 탭 아이콘, 홈 화면 아이콘, 카톡 공유 썸네일
 
 ## Nebula 사이트 전체 구성
@@ -64,7 +64,10 @@
   ```js
   window.nebulaTheme = { defaultPalette: 'lavender', palettes: [{ id: 'lavender', name: '라벤더', color: '#9680f2' }] }
   ```
-- 바꿀 때마다 `window`에 `nebula:theme` 이벤트가 옵니다 (`detail: { mode, palette }`).
+- 글꼴: `<html data-font="id">`, 저장 이름 `font`. 모든 사이트 글자를 덮어씀 (`시스템`을 고르면 사이트 원래 글꼴)
+  - `기본` = 제목(h1~h3) 경기천년제목 + 본문 Pretendard / `Pretendard` / `SUIT` / `경기천년제목` / `시스템`
+  - 글꼴 파일은 jsDelivr CDN에서 쓰는 것만 받음 (Pretendard·SUIT는 SIL OFL, 경기천년제목은 경기도 무료 배포)
+- 바꿀 때마다 `window`에 `nebula:theme` 이벤트가 옵니다 (`detail: { mode, palette, font }`).
 - 새로고침 깜빡임 방지: `<head>`에 저장값을 먼저 붙이는 짧은 스크립트를 넣으세요 (`public/index.html` 참고).
 - 사이트 CSS는 `:root[data-theme="light"] { ... }`와 `@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { ... } }` 두 곳에 같은 라이트 색을 넣으면 됩니다.
 

@@ -21,7 +21,8 @@
  *   → 사이트 CSS가 이 두 속성을 보고 색을 바꾸면 됩니다. 바는 속성을 바꾸고 저장만 함.
  *   색 테마 목록은 사이트가 알려줌 (없으면 화면 모드만 보임):
  *     window.nebulaTheme = { palettes: [{ id: 'red', name: '레드', color: '#ff4655' }, ...], defaultPalette: 'red' }
- *   바꿀 때마다 window 에 'nebula:theme' 이벤트를 보냄 (detail: { mode, palette })
+ *   글꼴:     <html data-font="id">, localStorage 'font' (기본 = 제목 경기천년제목 + 본문 Pretendard)
+ *   바꿀 때마다 window 에 'nebula:theme' 이벤트를 보냄 (detail: { mode, palette, font })
  *   새로고침 때 깜빡임이 없도록 각 사이트 <head>에 저장값을 먼저 적용하는 짧은 스크립트를 넣어 두세요 (README 참고)
  *
  * 색은 사이트의 CSS 변수를 따라갑니다 (없으면 기본 어두운 색):
@@ -188,6 +189,73 @@
     toastTimer = setTimeout(() => el.classList.remove('show'), 2200)
   }
 
+  // ── 글꼴 ── 모든 사이트에 같은 글꼴을 입힘. 테마 창에서 고르면 localStorage 'font' 에 저장
+  //  - 무료 글꼴: Pretendard·SUIT (SIL OFL), 경기천년제목 (경기도 무료 배포). 파일은 jsDelivr CDN에서 필요할 때만 받음
+  //  - 제목(h1~h3)과 본문 글꼴을 따로 정할 수 있어서 '기본'은 제목만 경기천년제목, 나머지는 Pretendard
+  const FONT_FILES = {
+    pretendard: { family: "'Pretendard Variable', Pretendard", css: 'https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css' },
+    suit: {
+      family: "'SUIT Variable'",
+      face: "@font-face { font-family: 'SUIT Variable'; font-weight: 100 900; font-display: swap; src: url('https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.woff2') format('woff2-variations'); }",
+    },
+    gyeonggi: {
+      family: "'GyeonggiTitleM'",
+      face: "@font-face { font-family: 'GyeonggiTitleM'; font-weight: normal; font-display: swap; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff'); }",
+    },
+  }
+  const FONTS = [
+    { id: 'default', label: '기본', hint: '제목 경기천년제목', title: 'gyeonggi', body: 'pretendard' },
+    { id: 'pretendard', label: 'Pretendard', title: 'pretendard', body: 'pretendard' },
+    { id: 'suit', label: 'SUIT', title: 'suit', body: 'suit' },
+    { id: 'gyeonggi', label: '경기천년제목', title: 'gyeonggi', body: 'gyeonggi' },
+    { id: 'system', label: '시스템', title: null, body: null },
+  ]
+  const FALLBACK = "system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
+  const loadedFonts = new Set()
+  /** 글꼴 파일 불러오기 (한 번만) */
+  function ensureFont(key) {
+    if (!key || loadedFonts.has(key)) return
+    loadedFonts.add(key)
+    const file = FONT_FILES[key]
+    if (file.css) {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = file.css
+      document.head.appendChild(link)
+    } else {
+      const style = document.createElement('style')
+      style.textContent = file.face
+      document.head.appendChild(style)
+    }
+  }
+  function currentFont() {
+    const id = html.dataset.font
+    return FONTS.find((f) => f.id === id) || FONTS[0]
+  }
+  /** 글꼴 적용: 글꼴 파일을 불러오고 CSS 변수에 이름을 넣음 (실제 덮어쓰기 규칙은 아래 fontStyle) */
+  function applyFont(id) {
+    const font = FONTS.find((f) => f.id === id) || FONTS[0]
+    html.dataset.font = font.id
+    ensureFont(font.title)
+    ensureFont(font.body)
+    html.style.setProperty('--nebula-font-title', font.title ? `${FONT_FILES[font.title].family}, ${FALLBACK}` : FALLBACK)
+    html.style.setProperty('--nebula-font-body', font.body ? `${FONT_FILES[font.body].family}, ${FALLBACK}` : FALLBACK)
+  }
+  // 사이트 글꼴을 덮어쓰는 규칙 (시스템을 고르면 사이트 원래 글꼴 그대로)
+  const fontStyle = document.createElement('style')
+  fontStyle.id = 'nebula-font'
+  fontStyle.textContent = `
+    html:not([data-font='system']) body, html:not([data-font='system']) body *:not(svg *) { font-family: var(--nebula-font-body) !important; }
+    html:not([data-font='system']) body :is(h1, h2, h3) { font-family: var(--nebula-font-title) !important; }`
+  document.head.appendChild(fontStyle)
+  // 스크립트가 실행되자마자 저장된 글꼴(없으면 기본) 적용
+  applyFont(load('font'))
+  function setFont(id) {
+    applyFont(id)
+    save('font', id === FONTS[0].id ? null : id)
+    announce()
+  }
+
   const MODES = [
     { id: 'light', label: '라이트' },
     { id: 'dark', label: '다크' },
@@ -240,7 +308,7 @@
     announce()
   }
   function announce() {
-    window.dispatchEvent(new CustomEvent('nebula:theme', { detail: { mode: currentMode(), palette: currentPalette() } }))
+    window.dispatchEvent(new CustomEvent('nebula:theme', { detail: { mode: currentMode(), palette: currentPalette(), font: currentFont().id } }))
   }
 
   function render(sites) {
@@ -262,7 +330,7 @@
           --active: var(--nebula-bar-active, var(--color-night-800, #2a2638));
           --panel: var(--nebula-bar-panel, var(--color-night-900, var(--bg)));
           --accent: var(--nebula-bar-accent, var(--color-lav-500, #9680f2));
-          font: 500 14px/1 system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+          font: 500 14px/1 var(--nebula-font-body, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif);
           color: var(--fg);
         }
         nav {
@@ -316,6 +384,14 @@
         .swatches button:hover { background: var(--active); }
         .swatches button.on { background: var(--active); color: var(--fg); font-weight: 700; box-shadow: inset 0 0 0 2px var(--accent); }
         .swatches .chip { width: 20px; height: 20px; border-radius: 50%; }
+        .fonts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+        .fonts button {
+          display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 8px 10px;
+          border-radius: 9px; font-size: 14px; color: var(--muted); text-align: left;
+        }
+        .fonts button small { font-size: 10px; opacity: .7; font-family: inherit; }
+        .fonts button:hover { background: var(--active); color: var(--fg); }
+        .fonts button.on { background: var(--active); color: var(--fg); font-weight: 700; box-shadow: inset 0 0 0 2px var(--accent); }
         @media (max-width: 480px) { .theme-btn .label { display: none; } .theme-btn { padding: 0 11px; } }
       </style>
       <div class="wrap">
@@ -339,6 +415,12 @@
           <div class="swatches"></div>
           <h3>화면 모드</h3>
           <div class="modes">${MODES.map((m) => `<button data-mode="${m.id}">${m.label}</button>`).join('')}</div>
+          <h3>글꼴</h3>
+          <div class="fonts">${FONTS.map(
+            (f) => `<button data-font="${f.id}" style="font-family:${
+              f.body ? `${FONT_FILES[f.title].family}, ${FALLBACK}` : FALLBACK
+            }">${f.label}${f.hint ? `<small>${f.hint}</small>` : ''}</button>`,
+          ).join('')}</div>
         </div>
       </div>`
 
@@ -354,6 +436,10 @@
     function refresh() {
       const mode = currentMode()
       root.querySelectorAll('.modes button').forEach((b) => b.classList.toggle('on', b.dataset.mode === mode))
+      const font = currentFont().id
+      root.querySelectorAll('.fonts button').forEach((b) => b.classList.toggle('on', b.dataset.font === font))
+      // 글꼴 버튼을 각 글꼴 모양으로 미리 보여주려고, 창을 열 때 글꼴 파일을 모두 불러옴
+      Object.keys(FONT_FILES).forEach(ensureFont)
       // 색 테마 목록은 창을 열 때 읽음 (사이트가 window.nebulaTheme 을 늦게 정해도 괜찮게)
       const { palettes } = themeConfig()
       const palette = currentPalette()
@@ -376,6 +462,10 @@
     root.querySelector('.modes').addEventListener('click', (e) => {
       const b = e.target.closest('button[data-mode]')
       if (b) setMode(b.dataset.mode), refresh()
+    })
+    root.querySelector('.fonts').addEventListener('click', (e) => {
+      const b = e.target.closest('button[data-font]')
+      if (b) setFont(b.dataset.font), refresh()
     })
     swatches.addEventListener('click', (e) => {
       const b = e.target.closest('button[data-palette]')
