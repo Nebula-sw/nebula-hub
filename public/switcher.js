@@ -35,6 +35,9 @@
  *   - 닫히면 끝나는 Promise를 돌려줌 (await nebula.alert('...') 가능)
  *   - [확인]·Enter·Esc·바깥 클릭으로 닫힘, 여러 개면 순서대로 하나씩, 휴대폰에서도 같은 모양
  *   - 색은 바와 같은 CSS 변수를 따라감 (--nebula-bar-*, 없으면 --color-night-* / --color-lav-*)
+ *   window.nebula.confirm('메시지', { ok: '초기화', danger: true })  → [취소]/[확인] 확인창
+ *   - 확인 누르면 true, 취소·Esc·바깥 클릭이면 false 인 Promise (if (await nebula.confirm('...')) { ... })
+ *   - Enter = 확인, ok = 확인 버튼 글자, danger = 확인 버튼을 빨간색으로 (지우기 같은 되돌릴 수 없는 작업)
  */
 ;(() => {
   // 같은 페이지에서 두 번 실행되지 않게
@@ -55,6 +58,12 @@
   window.nebula.alert = (message) =>
     new Promise((resolve) => {
       alertQueue.push({ message: String(message ?? ''), resolve })
+      if (alertQueue.length === 1) showNextAlert()
+    })
+  // 확인창: 알림창과 같은 줄(큐)에 서서 차례대로 뜸. confirm 정보가 있으면 [취소] 버튼이 추가됨
+  window.nebula.confirm = (message, options = {}) =>
+    new Promise((resolve) => {
+      alertQueue.push({ message: String(message ?? ''), resolve, confirm: { ok: options.ok || '확인', danger: !!options.danger } })
       if (alertQueue.length === 1) showNextAlert()
     })
 
@@ -91,30 +100,42 @@
           background: var(--accent); color: #fff; font: inherit; font-weight: 700;
         }
         button:hover { filter: brightness(1.08); }
+        .row { display: flex; gap: 8px; margin-top: 18px; }
+        .row button { margin-top: 0; }
+        button.cancel { background: transparent; color: var(--fg); border: 1px solid var(--border); font-weight: 500; }
+        button.danger { background: #e5484d; }
         @keyframes fade { from { opacity: 0; } }
       </style>
       <div class="back" part="backdrop">
-        <div class="box" role="alertdialog" aria-modal="true"><p></p><button type="button">확인</button></div>
+        <div class="box" role="alertdialog" aria-modal="true"><p></p>${
+          item.confirm
+            ? `<div class="row"><button type="button" class="cancel">취소</button><button type="button" class="ok${item.confirm.danger ? ' danger' : ''}"></button></div>`
+            : '<button type="button" class="ok">확인</button>'
+        }</div>
       </div>`
     root.querySelector('p').textContent = item.message // 글자 그대로 (HTML로 해석하지 않음)
-    const close = () => {
+    const ok = root.querySelector('.ok')
+    if (item.confirm) ok.textContent = item.confirm.ok
+    // answer: 확인창이면 true/false, 알림창이면 그냥 닫힘
+    const close = (answer) => {
       document.removeEventListener('keydown', onKey, true)
       root.innerHTML = ''
       alertQueue.shift()
-      item.resolve()
+      item.resolve(item.confirm ? answer : undefined)
       showNextAlert()
     }
     const onKey = (e) => {
       if (e.key === 'Escape' || e.key === 'Enter') {
         e.preventDefault()
         e.stopPropagation()
-        close()
+        close(e.key === 'Enter')
       }
     }
-    root.querySelector('.back').addEventListener('click', (e) => e.target === e.currentTarget && close())
-    root.querySelector('button').addEventListener('click', close)
+    root.querySelector('.back').addEventListener('click', (e) => e.target === e.currentTarget && close(false))
+    ok.addEventListener('click', () => close(true))
+    root.querySelector('.cancel')?.addEventListener('click', () => close(false))
     document.addEventListener('keydown', onKey, true)
-    root.querySelector('button').focus()
+    ok.focus()
   }
 
   const MODES = [

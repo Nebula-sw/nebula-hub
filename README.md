@@ -76,6 +76,12 @@ await window.nebula.alert('이 공대에는 이미 승객이 있어요.')
 - [확인]·Enter·Esc·바깥 클릭으로 닫히고, 여러 개면 순서대로 하나씩 보여줍니다.
 - 스크립트를 못 불러온 경우를 대비해 사이트에서는 `window.nebula?.alert ? nebula.alert(msg) : alert(msg)`처럼 쓰세요.
 
+```js
+if (await window.nebula.confirm('이번 주 기록을 지울까요?', { ok: '초기화', danger: true })) { ... }
+```
+- [취소]/[확인] 확인창. 확인 → `true`, 취소·Esc·바깥 클릭 → `false`. Enter는 확인.
+- `ok` = 확인 버튼 글자 (기본 "확인"), `danger: true` = 확인 버튼 빨간색 (지우기처럼 되돌릴 수 없는 작업)
+
 ## 로컬 실행 / 배포
 
 ```bash
