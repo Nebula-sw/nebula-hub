@@ -39,6 +39,7 @@
  *   - 확인 누르면 true, 취소·Esc·바깥 클릭이면 false 인 Promise (if (await nebula.confirm('...')) { ... })
  *   - Enter = 확인, ok = 확인 버튼 글자, danger = 확인 버튼을 빨간색으로 (지우기 같은 되돌릴 수 없는 작업)
  *   window.nebula.toast('조합을 복사했어요.')  → 화면 아래에 잠깐 떴다 사라지는 짧은 안내 (누를 필요 없음)
+ *   - 두 번째 값 { icon: 요소 } 를 주면 앞의 ✓ 대신 그 요소(아이콘·애니메이션)를 붙임
  */
 ;(() => {
   // 같은 페이지에서 두 번 실행되지 않게
@@ -142,7 +143,7 @@
   // ── 토스트 (window.nebula.toast) ── 화면 아래 가운데에 약 2초 떴다가 사라짐. 새로 오면 이전 것을 바꿈
   let toastHost = null
   let toastTimer = 0
-  window.nebula.toast = (message) => {
+  window.nebula.toast = (message, options = {}) => {
     if (!toastHost) {
       toastHost = document.createElement('div')
       toastHost.id = 'nebula-toast'
@@ -165,6 +166,8 @@
             content: '✓'; flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%;
             background: rgba(255, 255, 255, .25); font-size: 13px; font-weight: 800;
           }
+          .toast.has-icon::before { display: none; } /* 사이트가 준 아이콘이 있으면 ✓ 대신 */
+          .icon { flex: none; display: grid; place-items: center; }
           .toast.show { opacity: 1; transform: translate(-50%, 0) scale(1); }
         </style>
         <div class="toast" role="status" aria-live="polite"></div>`
@@ -172,6 +175,13 @@
     }
     const el = toastHost.shadowRoot.querySelector('.toast')
     el.textContent = String(message ?? '')
+    el.classList.toggle('has-icon', !!options.icon)
+    if (options.icon) {
+      const icon = document.createElement('span')
+      icon.className = 'icon'
+      icon.appendChild(options.icon)
+      el.prepend(icon) // 글자 왼쪽에
+    }
     // 다음 그림 차례에 show를 붙여야 아래에서 올라오는 움직임이 보임
     requestAnimationFrame(() => el.classList.add('show'))
     clearTimeout(toastTimer)
