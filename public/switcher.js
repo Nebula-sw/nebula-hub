@@ -22,6 +22,7 @@
  *   색 테마 목록은 사이트가 알려줌 (없으면 화면 모드만 보임):
  *     window.nebulaTheme = { palettes: [{ id: 'red', name: '레드', color: '#ff4655' }, ...], defaultPalette: 'red' }
  *   글꼴:     <html data-font="id">, localStorage 'font' (기본 = 제목 경기천년제목 + 본문 Pretendard)
+ *   글꼴·화면 모드는 nebula.kim 쿠키에도 저장해서 모든 Nebula 사이트가 같이 씀 (색 테마는 사이트마다 따로)
  *   바꿀 때마다 window 에 'nebula:theme' 이벤트를 보냄 (detail: { mode, palette, font })
  *   새로고침 때 깜빡임이 없도록 각 사이트 <head>에 저장값을 먼저 적용하는 짧은 스크립트를 넣어 두세요 (README 참고)
  *
@@ -248,11 +249,21 @@
     html:not([data-font='system']) body, html:not([data-font='system']) body *:not(svg *) { font-family: var(--nebula-font-body) !important; }
     html:not([data-font='system']) body :is(h1, h2, h3) { font-family: var(--nebula-font-title) !important; }`
   document.head.appendChild(fontStyle)
-  // 스크립트가 실행되자마자 저장된 글꼴(없으면 기본) 적용
-  applyFont(load('font'))
+  // 스크립트가 실행되자마자 저장된 글꼴(없으면 기본) 적용. 글꼴·화면 모드는 모든 Nebula 사이트 공통 (아래 loadShared)
+  applyFont(loadShared('font'))
+  // 화면 모드도 다른 사이트에서 바꾼 값이 있으면 맞춤 (사이트 <head>의 깜빡임 방지 스크립트가 다음부터 읽도록 이 사이트 저장소에도 복사)
+  {
+    const shared = loadShared('theme')
+    const mine = html.dataset.theme || null
+    if (shared !== mine) {
+      if (shared === 'light' || shared === 'dark') html.dataset.theme = shared
+      else delete html.dataset.theme
+      save('theme', shared)
+    }
+  }
   function setFont(id) {
     applyFont(id)
-    save('font', id === FONTS[0].id ? null : id)
+    saveShared('font', id === FONTS[0].id ? null : id)
     announce()
   }
 
@@ -277,6 +288,21 @@
       return null
     }
   }
+  // ── 모든 Nebula 사이트 공통 설정 (글꼴·화면 모드) ──
+  // localStorage 는 사이트(주소)마다 따로라서, nebula.kim 과 그 하위 주소(loa., nikke. …)가 같이 읽는 쿠키에 저장
+  // 쿠키가 없으면(예전 설정·로컬 개발) 이 사이트의 localStorage 값을 씀
+  const SHARED_DOMAIN = /(^|\.)nebula\.kim$/.test(location.hostname) ? 'nebula.kim' : null
+  function loadShared(key) {
+    const m = document.cookie.match(new RegExp('(?:^|; )nebula-' + key + '=([^;]*)'))
+    if (m) return m[1] === 'none' ? null : decodeURIComponent(m[1])
+    return load(key)
+  }
+  function saveShared(key, value) {
+    save(key, value)
+    // 1년 보관. 'none' = 기본값으로 되돌림(쿠키를 지우면 예전 localStorage 값이 다시 읽힐 수 있어서 명시적으로 표시)
+    const domain = SHARED_DOMAIN ? `; domain=${SHARED_DOMAIN}` : ''
+    document.cookie = `nebula-${key}=${value == null ? 'none' : encodeURIComponent(value)}; path=/; max-age=31536000; SameSite=Lax${domain}`
+  }
   function save(key, value) {
     try {
       if (value == null) localStorage.removeItem(key)
@@ -299,7 +325,7 @@
   function setMode(mode) {
     if (mode === 'system') delete html.dataset.theme
     else html.dataset.theme = mode
-    save('theme', mode === 'system' ? null : mode)
+    saveShared('theme', mode === 'system' ? null : mode)
     announce()
   }
   function setPalette(id) {

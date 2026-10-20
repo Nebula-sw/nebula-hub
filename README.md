@@ -64,6 +64,7 @@
   ```js
   window.nebulaTheme = { defaultPalette: 'lavender', palettes: [{ id: 'lavender', name: '라벤더', color: '#9680f2' }] }
   ```
+- **글꼴·화면 모드는 모든 Nebula 사이트 공통**: `nebula.kim` 도메인 쿠키(`nebula-font`, `nebula-theme`)에 저장해서 한 사이트에서 바꾸면 다른 사이트도 같이 바뀜 (색 테마는 사이트마다 따로)
 - 글꼴: `<html data-font="id">`, 저장 이름 `font`. 모든 사이트 글자를 덮어씀 (`시스템`을 고르면 사이트 원래 글꼴)
   - `기본` = 제목(h1~h3) 경기천년제목 + 본문 Pretendard / `Pretendard` / `SUIT` / `경기천년제목` / `시스템`
   - 글꼴 파일은 jsDelivr CDN에서 쓰는 것만 받음 (Pretendard·SUIT는 SIL OFL, 경기천년제목은 경기도 무료 배포)
